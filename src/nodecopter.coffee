@@ -3,7 +3,7 @@ imgur = require('imgur-node-api')
 path = require('path')
 fs = require('fs')
 
-imgur.setClientID(process.env.HUBOT_IMGUR_API_KEY);
+imgurApiKey = process.env.HUBOT_IMGUR_API_KEY
 client = arDrone.createClient()
 
 module.exports = (robot) ->
@@ -62,6 +62,11 @@ module.exports = (robot) ->
       msg.send "Battery: #{data.demo.batteryPercentage}%"
 
   robot.respond /photo|picutre/i, (msg) ->
+    unless imgurApiKey?
+      msg.send "imgure API key is missing:  Ensure that HUBOT_IMGUR_API_KEY is set."
+      return
+
+    imgur.setClientID(imgurApiKey);
     client.getPngStream().once 'data', (data) ->
       fs.writeFile 'photo.jpg', data, ->
         imgur.upload path.join(__dirname, "../photo.jpg"), (err, res) ->
