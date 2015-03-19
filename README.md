@@ -1,4 +1,4 @@
-# Hubot Nodecopter
+# [Hubot Nodecopter](http://libraries.io/npm/hubot-nodecopter)
 
 Control a Nodecopter with Hubot
 
